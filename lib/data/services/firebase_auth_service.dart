@@ -25,4 +25,8 @@ class FirebaseAuthService {
       throw Exception("login failed, error: $e");
     }
   }
+
+  User? getCurrentUser() {
+    return _firebaseAuth.currentUser;
+  }
 }
