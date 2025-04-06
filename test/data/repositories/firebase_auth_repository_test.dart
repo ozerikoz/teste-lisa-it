@@ -67,4 +67,17 @@ void main() {
       expect(result, true);
     });
   });
+
+  group('FirebaseAuthRepository - logout', () {
+    test('Successful logout', () async {
+      // Mock FirebaseAuthService logout method
+      when(() => mockAuthService.logout()).thenAnswer((_) async => {});
+
+      // Execute the logout method
+      await authRepository.logout();
+
+      // Verify that the logout method was called
+      verify(() => mockAuthService.logout()).called(1);
+    });
+  });
 }
