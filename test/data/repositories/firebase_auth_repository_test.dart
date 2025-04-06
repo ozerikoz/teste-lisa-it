@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:teste_lisa_it/data/repositories/firebase_auth_repository.dart';
-import 'package:teste_lisa_it/data/services/firebase_auth_service.dart';
+import 'package:teste_lisa_it/data/repositories/auth/firebase_auth_repository.dart';
+import 'package:teste_lisa_it/data/services/auth/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mocktail/mocktail.dart';
 
