@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "997845336204",
+    "project_id": "teste-lisa-it",
+    "storage_bucket": "teste-lisa-it.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997845336204:android:dc743b7b9ea28792a93ba9",
+        "android_client_info": {
+          "package_name": "com.example.teste_lisa_it"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlNk_GfQx4ORKC-8Pqjz7F9saZsKR1goQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
