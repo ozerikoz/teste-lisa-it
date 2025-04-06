@@ -54,4 +54,17 @@ void main() {
       expect(user.profileImageUrl, 'https://via.placeholder.com/600/92c952');
     });
   });
+
+  group('FirebaseAuthRepository - isLoggedIn', () {
+    test('Should return true when user is logged in', () async {
+      // Mock FirebaseAuthService getCurrentUser method
+      when(() => mockAuthService.getCurrentUser()).thenReturn(mockUser);
+
+      // Execute the isLoggedIn method
+      final result = await authRepository.isLoggedIn();
+
+      // Verify the result
+      expect(result, true);
+    });
+  });
 }
