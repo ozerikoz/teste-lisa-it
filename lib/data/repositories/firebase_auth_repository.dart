@@ -45,7 +45,11 @@ class FirebaseAuthRepository extends AuthRepository {
 
   @override
   Future<void> logout() {
-    throw UnimplementedError();
+    try {
+      return _firebaseAuthService.logout();
+    } catch (e) {
+      throw UnimplementedError();
+    }
   }
 
   User? getCurrentUser() {
