@@ -1,6 +1,6 @@
 import 'package:teste_lisa_it/data/repositories/auth/auth_repository.dart';
 import 'package:teste_lisa_it/data/services/auth/firebase_auth_service.dart';
-import 'package:teste_lisa_it/domain/entities/user_entity.dart';
+import 'package:teste_lisa_it/domain/entities/user/user_entity.dart';
 
 class FirebaseAuthRepository extends AuthRepository {
   final FirebaseAuthService _firebaseAuthService;

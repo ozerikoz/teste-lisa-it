@@ -1,4 +1,4 @@
-import 'package:teste_lisa_it/domain/entities/user_entity.dart';
+import 'package:teste_lisa_it/domain/entities/user/user_entity.dart';
 
 abstract class AuthRepository {
   /// Performs user login with the given [email] and [password].
