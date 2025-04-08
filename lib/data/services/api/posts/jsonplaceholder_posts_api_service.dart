@@ -21,9 +21,9 @@ class JsonPlaceholderPostsApiService {
       final List<JsonPlaceholderPostModel> posts;
 
       posts = response
-          .map((post) => JsonPlaceholderPostModel.fromJson(post))
-          .toList()
-          .cast<JsonPlaceholderPostModel>();
+          .map<JsonPlaceholderPostModel>(
+              (post) => JsonPlaceholderPostModel.fromJson(post))
+          .toList();
 
       return posts;
     } catch (e) {
