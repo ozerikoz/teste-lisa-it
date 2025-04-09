@@ -1,17 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'profile_entity.g.dart';
+part 'post_user_entity.g.dart';
 
 @JsonSerializable()
-class Profile {
-  final String userId;
+class PostUser {
+  final int userId;
   final String name;
   final int age;
   final List<String> interests;
   final String imageUrl;
   final int postCount;
 
-  Profile({
+  PostUser({
     required this.userId,
     required this.name,
     required this.age,
@@ -20,8 +20,8 @@ class Profile {
     required this.postCount,
   });
 
-  factory Profile.fromJson(Map<String, dynamic> json) =>
-      _$ProfileFromJson(json);
+  factory PostUser.fromJson(Map<String, dynamic> json) =>
+      _$PostUserFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ProfileToJson(this);
+  Map<String, dynamic> toJson() => _$PostUserToJson(this);
 }

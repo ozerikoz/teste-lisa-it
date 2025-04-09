@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profile_entity.dart';
+part of 'post_user_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
-      userId: json['userId'] as String,
+PostUser _$PostUserFromJson(Map<String, dynamic> json) => PostUser(
+      userId: (json['userId'] as num).toInt(),
       name: json['name'] as String,
       age: (json['age'] as num).toInt(),
       interests:
@@ -16,7 +16,7 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
       postCount: (json['postCount'] as num).toInt(),
     );
 
-Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
+Map<String, dynamic> _$PostUserToJson(PostUser instance) => <String, dynamic>{
       'userId': instance.userId,
       'name': instance.name,
       'age': instance.age,
