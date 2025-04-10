@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teste_lisa_it/core/blocs/observer/observer_bloc.dart';
 import 'package:teste_lisa_it/firebase_options.dart';
 
 void main() async {
@@ -9,6 +11,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Init Bloc Observer
+  Bloc.observer = AppBlocObserver();
 
   runApp(const MainApp());
 }
