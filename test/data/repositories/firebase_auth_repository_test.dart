@@ -55,16 +55,27 @@ void main() {
     });
   });
 
-  group('FirebaseAuthRepository - isLoggedIn', () {
-    test('Should return true when user is logged in', () async {
+  group('FirebaseAuthRepository - isAuthenticated', () {
+    test('Should return user when authenticated', () async {
       // Mock FirebaseAuthService getCurrentUser method
       when(() => mockAuthService.getCurrentUser()).thenReturn(mockUser);
 
-      // Execute the isLoggedIn method
-      final result = await authRepository.isLoggedIn();
+      // Execute the isAuthenticated method
+      final result = await authRepository.isAuthenticated();
 
-      // Verify the result
-      expect(result, true);
+      // Verify the result is the correct user
+      expect(result, isNotNull);
+    });
+
+    test('Should return null when not authenticated', () async {
+      // Mock FirebaseAuthService getCurrentUser method to return null
+      when(() => mockAuthService.getCurrentUser()).thenReturn(null);
+
+      // Execute the isAuthenticated method
+      final result = await authRepository.isAuthenticated();
+
+      // Verify the result is null
+      expect(result, isNull);
     });
   });
 
