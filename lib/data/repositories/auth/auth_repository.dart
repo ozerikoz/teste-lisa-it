@@ -11,5 +11,5 @@ abstract class AuthRepository {
   Future<void> logout();
 
   /// Checks if the user is logged in.
-  Future<bool> isLoggedIn();
+  Future<User?> isAuthenticated();
 }

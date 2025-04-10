@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:teste_lisa_it/domain/entities/user/user_entity.dart';
+part of 'auth_bloc.dart';
 
 enum AuthStatus { authenticated, unauthenticated }
 

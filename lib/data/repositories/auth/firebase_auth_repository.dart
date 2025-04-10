@@ -9,26 +9,27 @@ class FirebaseAuthRepository extends AuthRepository {
     required FirebaseAuthService firebaseAuthService,
   }) : _firebaseAuthService = firebaseAuthService;
 
-  bool? _isLoggedIn;
+  User? _user;
 
   @override
-  Future<bool> isLoggedIn() async {
+  Future<User?> isAuthenticated() async {
     // Return cached value if already determined
-    if (_isLoggedIn != null) {
-      return _isLoggedIn!;
+    if (_user != null) {
+      return _user!;
     }
 
-    // Check if the user is logged in via the service
-    _isLoggedIn = _firebaseAuthService.getCurrentUser() != null;
+    _user = _getCurrentUser();
 
-    return _isLoggedIn ?? false;
+    return _user;
   }
 
   @override
   Future<User> login({required String email, required String password}) async {
     try {
-      final userCredential =
-          await _firebaseAuthService.login(email: email, password: password);
+      final userCredential = await _firebaseAuthService.login(
+        email: email,
+        password: password,
+      );
 
       final user = User(
         userUid: userCredential.user?.uid ?? "",
@@ -52,15 +53,12 @@ class FirebaseAuthRepository extends AuthRepository {
     }
   }
 
-  User? getCurrentUser() {
+  User? _getCurrentUser() {
     final user = _firebaseAuthService.getCurrentUser();
 
     if (user == null) {
-      _isLoggedIn = false;
       return null;
     }
-
-    _isLoggedIn = true;
 
     return User(
       userUid: user.uid,

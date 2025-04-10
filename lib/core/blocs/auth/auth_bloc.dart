@@ -1,7 +1,14 @@
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teste_lisa_it/core/blocs/auth/auth_event.dart';
-import 'package:teste_lisa_it/core/blocs/auth/auth_state.dart';
 import 'package:teste_lisa_it/data/repositories/auth/auth_repository.dart';
+import 'package:teste_lisa_it/domain/entities/user/user_entity.dart';
+
+part 'auth_event.dart';
+part 'auth_state.dart';
+
+/// A notifier to manage the authentication refresh state in router.
+final authRefreshNotifier = ValueNotifier<bool>(false);
 
 /// AuthBloc that manages the authentication state of the app.
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -18,18 +25,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onAuthCheckEvent(
     AuthCheckEvent event,
     Emitter<AuthState> emit,
-  ) {
-    // Check if the user is authenticated by user object
-    if (event.user != null) {
+  ) async {
+    final User? user = await _authRepository.isAuthenticated();
+
+    if (user != null) {
       emit(state.copyWith(
         status: AuthStatus.authenticated,
-        user: event.user,
+        user: user,
       ));
+
+      authRefreshNotifier.value = true;
     } else {
       emit(state.copyWith(
         status: AuthStatus.unauthenticated,
         user: null,
       ));
+      authRefreshNotifier.value = false;
     }
   }
 
@@ -44,5 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       status: AuthStatus.unauthenticated,
       user: null,
     ));
+
+    authRefreshNotifier.value = false;
   }
 }

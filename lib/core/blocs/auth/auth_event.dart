@@ -1,11 +1,7 @@
-import 'package:teste_lisa_it/domain/entities/user/user_entity.dart';
+part of 'auth_bloc.dart';
 
 abstract class AuthEvent {}
 
-class AuthCheckEvent extends AuthEvent {
-  final User? user;
-
-  AuthCheckEvent({this.user});
-}
+class AuthCheckEvent extends AuthEvent {}
 
 class AuthLogoutEvent extends AuthEvent {}
