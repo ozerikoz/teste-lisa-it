@@ -1,7 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:teste_lisa_it/core/blocs/auth/auth_bloc.dart';
 import 'package:teste_lisa_it/core/blocs/observer/observer_bloc.dart';
+import 'package:teste_lisa_it/core/dependencies.dart';
+import 'package:teste_lisa_it/core/router/router.dart';
 import 'package:teste_lisa_it/firebase_options.dart';
 
 void main() async {
@@ -15,7 +19,13 @@ void main() async {
   // Init Bloc Observer
   Bloc.observer = AppBlocObserver();
 
-  runApp(const MainApp());
+  runApp(
+    MultiProvider(
+      // Init app dependencies
+      providers: dependencies,
+      child: MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -23,11 +33,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return BlocProvider(
+      create: (context) => AuthBloc(
+        authRepository: context.read(),
+      ),
+      child: MaterialApp.router(
+        routerConfig: router(),
       ),
     );
   }
