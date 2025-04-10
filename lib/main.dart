@@ -7,6 +7,7 @@ import 'package:teste_lisa_it/core/blocs/observer/observer_bloc.dart';
 import 'package:teste_lisa_it/core/dependencies.dart';
 import 'package:teste_lisa_it/core/router/router.dart';
 import 'package:teste_lisa_it/firebase_options.dart';
+import 'package:teste_lisa_it/presentation/core/themes/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,8 +37,14 @@ class MainApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => AuthBloc(
         authRepository: context.read(),
-      ),
+        // Check auth status on app start
+      )..add(
+          AuthCheckEvent(),
+        ),
       child: MaterialApp.router(
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
         routerConfig: router(),
       ),
     );
