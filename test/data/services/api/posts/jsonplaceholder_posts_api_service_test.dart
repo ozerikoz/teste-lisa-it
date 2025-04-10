@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:teste_lisa_it/consts.dart';
+import 'package:teste_lisa_it/core/constants/api_consts.dart';
 import 'package:teste_lisa_it/data/services/api/api_client.dart';
 import 'package:teste_lisa_it/data/services/api/models/posts/jsonplaceholder_post_model.dart';
 import 'package:teste_lisa_it/data/services/api/posts/jsonplaceholder_posts_api_service.dart';

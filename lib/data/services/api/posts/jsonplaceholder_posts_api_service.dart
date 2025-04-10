@@ -1,4 +1,4 @@
-import 'package:teste_lisa_it/consts.dart';
+import 'package:teste_lisa_it/core/constants/api_consts.dart';
 import 'package:teste_lisa_it/data/services/api/api_client.dart';
 import 'package:teste_lisa_it/data/services/api/models/posts/jsonplaceholder_post_model.dart';
 
