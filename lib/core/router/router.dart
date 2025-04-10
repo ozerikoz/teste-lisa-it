@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:teste_lisa_it/core/blocs/auth/auth_bloc.dart';
-import 'package:teste_lisa_it/core/blocs/auth/auth_state.dart';
 import 'package:teste_lisa_it/core/router/routes.dart';
+import 'package:teste_lisa_it/presentation/auth/login/bloc/login_bloc.dart';
+import 'package:teste_lisa_it/presentation/auth/login/pages/login_page.dart';
+import 'package:teste_lisa_it/presentation/home/pages/home_page.dart';
 
 /// Router configuration for the app.
 /// Listens to changes in [AuthBloc] to redirect the user
@@ -11,8 +13,24 @@ import 'package:teste_lisa_it/core/router/routes.dart';
 GoRouter router() => GoRouter(
       initialLocation: Routes.home,
       debugLogDiagnostics: true,
-      redirect: (context, state) => _redirect(context, state),
-      routes: [],
+      redirect: _redirect,
+      refreshListenable: authRefreshNotifier,
+      routes: [
+        GoRoute(
+          path: Routes.login,
+          builder: (context, state) => BlocProvider(
+            create: (context) => LoginBloc(
+              authRepository: context.read(),
+              authBloc: context.read(),
+            ),
+            child: LoginPage(),
+          ),
+        ),
+        GoRoute(
+          path: Routes.home,
+          builder: (context, state) => HomePage(),
+        ),
+      ],
     );
 
 Future<String?> _redirect(
