@@ -21,8 +21,15 @@ void main() {
     group("fetchPosts", () {
       test("should return a list of posts when the API call is successful",
           () async {
+        // Define the limit for pagination
         const limit = 2;
-        const page = 0;
+        // Define the page for pagination
+        const page = 1;
+
+        // Construct the endpoint URL
+        final String endpoint = "posts?_page=$page&_limit=$limit";
+
+        // Mock response data
         final mockResponse = [
           {
             "userId": 1,
@@ -38,11 +45,14 @@ void main() {
           },
         ];
 
+        // Mock the API client response
         when(() => mockApiClient.get(any()))
             .thenAnswer((_) async => mockResponse);
 
+        // Call the fetchPosts method
         final result = await service.fetchPosts(limit: limit, page: page);
 
+        // Validate the result
         expect(result, isA<List<JsonPlaceholderPostModel>>());
         expect(result.length, limit);
 
@@ -60,8 +70,8 @@ void main() {
         expect(post2.title, "post 2");
         expect(post2.body, "content 2");
 
-        verify(() => mockApiClient
-                .get("$jsonPlaceHolderBaseUrl/posts?page=_$page&_limit=$limit"))
+        // Verify that the API client was called with the correct endpoint
+        verify(() => mockApiClient.get("$jsonPlaceHolderBaseUrl/$endpoint"))
             .called(1);
       });
     });
