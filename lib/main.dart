@@ -42,6 +42,7 @@ class MainApp extends StatelessWidget {
           AuthCheckEvent(),
         ),
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
