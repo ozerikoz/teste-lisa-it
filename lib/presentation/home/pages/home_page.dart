@@ -56,7 +56,11 @@ class _HomePageState extends State<HomePage> {
           if (state.status == PostsStatus.loading && state.posts.isEmpty ||
               state.status == PostsStatus.initial) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: SizedBox(
+                width: 36,
+                height: 36,
+                child: CircularProgressIndicator(),
+              ),
             );
             // Initial error state
           } else if (state.status == PostsStatus.failure &&
@@ -106,7 +110,11 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24),
                         child: const Center(
-                          child: CircularProgressIndicator(),
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(),
+                          ),
                         ),
                       ),
 
