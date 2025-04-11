@@ -1,26 +1,28 @@
+/// Api client interface
+/// This interface defines the methods for making HTTP requests.
 abstract class ApiClient {
   Future<dynamic> get(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? params,
   });
 
   Future<dynamic> post(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? data,
   });
 
   Future<dynamic> put(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? data,
   });
 
   Future<dynamic> delete(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? data,
   });
 
   Future<dynamic> patch(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? data,
   });
 }
