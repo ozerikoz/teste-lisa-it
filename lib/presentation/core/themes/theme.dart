@@ -30,11 +30,14 @@ abstract class AppTheme {
         ),
       ),
       textTheme: const TextTheme(
-        displayLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        displayMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        bodyLarge: TextStyle(fontSize: 16),
-        bodyMedium: TextStyle(fontSize: 14),
+        displayLarge: TextStyle(
+            fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.black1),
+        displayMedium: TextStyle(
+            fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.black1),
+        titleLarge: TextStyle(
+            fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.black1),
+        bodyLarge: TextStyle(fontSize: 16, color: AppColors.black1),
+        bodyMedium: TextStyle(fontSize: 14, color: AppColors.black1),
       ),
     );
   }
@@ -66,11 +69,14 @@ abstract class AppTheme {
         ),
       ),
       textTheme: const TextTheme(
-        displayLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        displayMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        bodyLarge: TextStyle(fontSize: 16),
-        bodyMedium: TextStyle(fontSize: 14),
+        displayLarge: TextStyle(
+            fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.white1),
+        displayMedium: TextStyle(
+            fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.white1),
+        titleLarge: TextStyle(
+            fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.white1),
+        bodyLarge: TextStyle(fontSize: 16, color: AppColors.white1),
+        bodyMedium: TextStyle(fontSize: 14, color: AppColors.white1),
       ),
     );
   }
