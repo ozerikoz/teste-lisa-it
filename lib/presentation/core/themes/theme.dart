@@ -8,6 +8,7 @@ abstract class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: AppColors.lightColorScheme,
+      primaryColor: AppColors.white1,
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.black1,
         foregroundColor: AppColors.white1,
@@ -47,6 +48,7 @@ abstract class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: AppColors.darkColorScheme,
+      primaryColor: AppColors.black1,
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.black1,
         foregroundColor: AppColors.white1,
