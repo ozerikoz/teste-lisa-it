@@ -15,7 +15,10 @@ class TesteLisaAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(title),
       actions: [
-        LogoutButton(),
+        Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: LogoutButton(),
+        ),
       ],
     );
   }
