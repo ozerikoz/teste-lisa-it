@@ -13,9 +13,11 @@ class JsonPlaceholderPostsApiService {
     required int limit,
     required int page,
   }) async {
+    final String endpoint = "posts?_page=$page&_limit=$limit";
+
     try {
       final response = await _apiClient.get(
-        '$jsonPlaceHolderBaseUrl/posts?page=_$page&_limit=$limit',
+        '$jsonPlaceHolderBaseUrl/$endpoint',
       );
 
       final List<JsonPlaceholderPostModel> posts;
