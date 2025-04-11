@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teste_lisa_it/data/repositories/post_users/post_users_repository.dart';
 import 'package:teste_lisa_it/data/repositories/posts/posts_repository.dart';
-import 'package:teste_lisa_it/domain/entities/post_user/post_user_entity.dart';
-import 'package:teste_lisa_it/presentation/home/dtos/post_info_dto.dart';
+import 'package:teste_lisa_it/presentation/home/models/post_ui_model.dart';
+import 'package:teste_lisa_it/presentation/home/models/post_user_profile_ui_model.dart';
 
 part 'posts_event.dart';
 part 'posts_state.dart';
@@ -51,7 +51,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       }
 
       // local var to store the posts with user info
-      final postInfoList = <PostInfoDto>[];
+      final postInfoList = <PostUIModel>[];
 
       // fetch the postUser for each post
       for (int i = 0; i < newPosts.length; i++) {
@@ -62,16 +62,17 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
             await _postUsersRepository.getUserById(userId: post.userId);
 
         // create the PostInfoDto with the post and postUser info
-        final postInfo = PostInfoDto(
-          postUser: PostUser(
-            userId: post.userId,
-            name: postUser!.name,
+        final postInfo = PostUIModel(
+          title: post.title,
+          body: post.body,
+          postUserProfile: PostUserProfileUIModel(
+            userId: postUser!.userId,
+            name: postUser.name,
+            imageUrl: postUser.imageUrl,
             age: postUser.age,
             interests: postUser.interests,
-            imageUrl: postUser.imageUrl,
             postCount: postUser.postCount,
           ),
-          post: post,
         );
 
         // add the new postInfo to the list

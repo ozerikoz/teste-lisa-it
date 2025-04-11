@@ -4,7 +4,7 @@ enum PostsStatus { initial, loading, success, failure }
 
 class PostsState extends Equatable {
   final PostsStatus status;
-  final List<PostInfoDto> posts;
+  final List<PostUIModel> posts;
   final String? errorMessage;
   final int page;
   final bool reachedMaxPage;
@@ -19,7 +19,7 @@ class PostsState extends Equatable {
 
   PostsState copyWith({
     PostsStatus? status,
-    List<PostInfoDto>? posts,
+    List<PostUIModel>? posts,
     String? errorMessage,
     int? page,
     bool? reachedMaxPage,
