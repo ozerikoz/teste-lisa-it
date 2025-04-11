@@ -38,6 +38,9 @@ class FirebaseAuthRepository extends AuthRepository {
         profileImageUrl: userCredential.user?.photoURL ?? "",
       );
 
+      // Cache the user object
+      _user = user;
+
       return user;
     } catch (e) {
       throw UnimplementedError();
