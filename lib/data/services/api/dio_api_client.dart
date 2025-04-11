@@ -29,12 +29,12 @@ class DioApiClient extends ApiClient {
 
   @override
   Future<dynamic> get(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? params,
   }) async {
     try {
       final response = await _dio.get(
-        endpoint,
+        apiUrl,
         queryParameters: params,
       );
 
@@ -47,12 +47,12 @@ class DioApiClient extends ApiClient {
 
   @override
   Future<dynamic> post(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? data,
   }) async {
     try {
       final response = await _dio.post(
-        endpoint,
+        apiUrl,
         data: data,
       );
 
@@ -65,12 +65,12 @@ class DioApiClient extends ApiClient {
 
   @override
   Future<dynamic> put(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? data,
   }) async {
     try {
       final response = await _dio.put(
-        endpoint,
+        apiUrl,
         data: data,
       );
 
@@ -83,12 +83,12 @@ class DioApiClient extends ApiClient {
 
   @override
   Future<dynamic> delete(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? data,
   }) async {
     try {
       final response = await _dio.delete(
-        endpoint,
+        apiUrl,
         data: data,
       );
 
@@ -101,12 +101,12 @@ class DioApiClient extends ApiClient {
 
   @override
   Future<dynamic> patch(
-    String endpoint, {
+    String apiUrl, {
     Map<String, dynamic>? data,
   }) async {
     try {
       final response = await _dio.patch(
-        endpoint,
+        apiUrl,
         data: data,
       );
 
