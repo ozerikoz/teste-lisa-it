@@ -75,22 +75,31 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 24),
                   BlocBuilder<LoginBloc, LoginState>(
                     builder: (context, state) {
-                      return ElevatedButton(
-                        onPressed: state.status == LoginStatus.loading
-                            ? null
-                            : () {
-                                if (_formKey.currentState!.validate()) {
-                                  context.read<LoginBloc>().add(
-                                        LoginRequestedEvent(
-                                          email: state.email,
-                                          password: state.password,
-                                        ),
-                                      );
-                                }
-                              },
-                        child: state.status == LoginStatus.loading
-                            ? const CircularProgressIndicator()
-                            : const Text("Login"),
+                      return SizedBox(
+                        width: 120,
+                        child: ElevatedButton(
+                          onPressed: state.status == LoginStatus.loading
+                              ? null
+                              : () {
+                                  if (_formKey.currentState!.validate()) {
+                                    context.read<LoginBloc>().add(
+                                          LoginRequestedEvent(
+                                            email: state.email,
+                                            password: state.password,
+                                          ),
+                                        );
+                                  }
+                                },
+                          child: state.status == LoginStatus.loading
+                              ? SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                )
+                              : const Text("Login"),
+                        ),
                       );
                     },
                   ),
