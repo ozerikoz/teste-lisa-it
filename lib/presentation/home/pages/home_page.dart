@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:teste_lisa_it/core/router/routes.dart';
 import 'package:teste_lisa_it/presentation/core/widgets/app_bar.dart';
 import 'package:teste_lisa_it/presentation/home/bloc/posts_bloc.dart';
 import 'package:teste_lisa_it/presentation/home/widgets/post_card.dart';
@@ -35,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       // Return if the user is already loading more posts to avoid multiple calls
       if (postsBloc.state.status == PostsStatus.loading) return;
 
-      // call [FetchPostsEvent] to load more posts
+      // Call [FetchPostsEvent] to load more posts
       // and increment the page number
       postsBloc.add(FetchPostsEvent(page: postsBloc.state.page + 1));
     }
@@ -44,23 +46,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TesteLisaAppBar(title: "Feed de posts"),
+      appBar: TesteLisaAppBar(title: "Listagem de posts"),
       body: BlocConsumer<PostsBloc, PostsState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          // todo show snackbar if PostStatus.status is failure
+        },
         builder: (context, state) {
-          // initial loading state
+          // Initial loading state
           if (state.status == PostsStatus.loading && state.posts.isEmpty ||
               state.status == PostsStatus.initial) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-            // initial error state
+            // Initial error state
           } else if (state.status == PostsStatus.failure &&
               state.posts.isEmpty) {
             return Center(
               child: Text(state.errorMessage ?? "Error"),
             );
-            // success state
+            // Success state
           } else if (state.status == PostsStatus.success ||
               state.status == PostsStatus.loading && state.posts.isNotEmpty ||
               state.status == PostsStatus.failure && state.posts.isNotEmpty) {
@@ -72,12 +76,31 @@ class _HomePageState extends State<HomePage> {
 
                 return Column(
                   children: [
-                    PostCard(
-                      title: post.post.title,
-                      body: post.post.body,
-                      postUserName: post.postUser.name,
-                      postUserImageUrl: post.postUser.imageUrl,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: PostCard(
+                        title: post.title,
+                        body: post.body,
+                        postUserName: post.postUserProfile.name,
+                        postUserImageUrl: post.postUserProfile.imageUrl,
+                        onTap: () {
+                          // Navigate to post details page
+                          context.push(
+                            Routes.postDetails,
+                            extra: post,
+                          );
+                        },
+                        onTapPostUserProfile: () {
+                          // Navigate to post user profile page
+                          context.push(
+                            Routes.postUserProfile,
+                            extra: post.postUserProfile,
+                          );
+                        },
+                      ),
                     ),
+                    // If the user reach the end of the list and is loading more posts
+                    // show a loading indicator
                     if (index == state.posts.length - 1 &&
                         state.status == PostsStatus.loading)
                       Padding(
@@ -86,6 +109,10 @@ class _HomePageState extends State<HomePage> {
                           child: CircularProgressIndicator(),
                         ),
                       ),
+
+                    // If the user reach the end of the list
+                    // and has reached the max page
+                    // show a message
                     if (index == state.posts.length - 1 && state.reachedMaxPage)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24),
