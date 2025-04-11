@@ -14,96 +14,111 @@ class LoginPage extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        body: BlocListener<LoginBloc, LoginState>(
-          listenWhen: (previous, current) => previous.status != current.status,
-          listener: (context, state) {
-            if (state.status == LoginStatus.success) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Login successful")),
-              );
-            } else if (state.status == LoginStatus.error) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errorMessage ?? "Login failed")),
-              );
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  BlocBuilder<LoginBloc, LoginState>(
-                    buildWhen: (previous, current) =>
-                        previous.email != current.email,
-                    builder: (context, state) {
-                      return TextFormField(
-                        initialValue: state.email,
-                        decoration: const InputDecoration(labelText: "Email"),
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: (value) => context
-                            .read<LoginBloc>()
-                            .add(EmailChangedEvent(value)),
-                        validator: (value) {
-                          // todo create password validator
-
-                          return null;
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  BlocBuilder<LoginBloc, LoginState>(
-                    buildWhen: (previous, current) =>
-                        previous.password != current.password,
-                    builder: (context, state) {
-                      return TextFormField(
-                        initialValue: state.password,
-                        decoration:
-                            const InputDecoration(labelText: "Password"),
-                        obscureText: true,
-                        onChanged: (value) => context
-                            .read<LoginBloc>()
-                            .add(PasswordChangedEvent(value)),
-                        validator: (value) {
-                          // todo create password validator
-                          return null;
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 24),
-                  BlocBuilder<LoginBloc, LoginState>(
-                    builder: (context, state) {
-                      return SizedBox(
-                        width: 120,
-                        child: ElevatedButton(
-                          onPressed: state.status == LoginStatus.loading
-                              ? null
-                              : () {
-                                  if (_formKey.currentState!.validate()) {
-                                    context.read<LoginBloc>().add(
-                                          LoginRequestedEvent(
-                                            email: state.email,
-                                            password: state.password,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Login",
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    const SizedBox(height: 24),
+                    BlocBuilder<LoginBloc, LoginState>(
+                      buildWhen: (previous, current) =>
+                          previous.email != current.email,
+                      builder: (context, state) {
+                        return TextFormField(
+                          initialValue: state.email,
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (value) => context
+                              .read<LoginBloc>()
+                              .add(EmailChangedEvent(value)),
+                          validator: (value) {
+                            // todo create email validator
+                            return null;
+                          },
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    BlocBuilder<LoginBloc, LoginState>(
+                      buildWhen: (previous, current) =>
+                          previous.password != current.password,
+                      builder: (context, state) {
+                        return TextFormField(
+                          initialValue: state.password,
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                          ),
+                          obscureText: true,
+                          onChanged: (value) => context
+                              .read<LoginBloc>()
+                              .add(PasswordChangedEvent(value)),
+                          validator: (value) {
+                            // todo create password validator
+                            return null;
+                          },
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    BlocConsumer<LoginBloc, LoginState>(
+                      listener: (context, state) {
+                        // todo if LoginStatus.failure show a snackbar with the error message
+                      },
+                      builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: state.status == LoginStatus.loading
+                                  ? null
+                                  : () {
+                                      if (_formKey.currentState!.validate()) {
+                                        context.read<LoginBloc>().add(
+                                              LoginRequestedEvent(
+                                                email: state.email,
+                                                password: state.password,
+                                              ),
+                                            );
+                                      }
+                                    },
+                              child: state.status == LoginStatus.loading
+                                  ? SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: CircularProgressIndicator(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    )
+                                  : Text(
+                                      "Login",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                           ),
-                                        );
-                                  }
-                                },
-                          child: state.status == LoginStatus.loading
-                              ? SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                )
-                              : const Text("Login"),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                                    ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
