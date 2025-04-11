@@ -5,6 +5,7 @@ import 'package:teste_lisa_it/core/blocs/auth/auth_bloc.dart';
 import 'package:teste_lisa_it/core/router/routes.dart';
 import 'package:teste_lisa_it/presentation/auth/login/bloc/login_bloc.dart';
 import 'package:teste_lisa_it/presentation/auth/login/pages/login_page.dart';
+import 'package:teste_lisa_it/presentation/home/bloc/posts_bloc.dart';
 import 'package:teste_lisa_it/presentation/home/pages/home_page.dart';
 
 /// Router configuration for the app.
@@ -28,7 +29,15 @@ GoRouter router() => GoRouter(
         ),
         GoRoute(
           path: Routes.home,
-          builder: (context, state) => HomePage(),
+          builder: (context, state) => BlocProvider(
+            create: (context) => PostsBloc(
+              postsRepository: context.read(),
+              postUsersRepository: context.read(),
+            )..add(
+                FetchPostsEvent(),
+              ),
+            child: HomePage(),
+          ),
         ),
       ],
     );
