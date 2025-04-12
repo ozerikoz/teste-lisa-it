@@ -6,7 +6,7 @@ import 'package:teste_lisa_it/core/blocs/auth/auth_bloc.dart';
 import 'package:teste_lisa_it/core/blocs/observer/observer_bloc.dart';
 import 'package:teste_lisa_it/core/dependencies.dart';
 import 'package:teste_lisa_it/core/router/router.dart';
-import 'package:teste_lisa_it/firebase_options.dart';
+import 'package:teste_lisa_it/config/firebase_options.dart';
 import 'package:teste_lisa_it/presentation/core/themes/theme.dart';
 
 void main() async {
@@ -14,6 +14,7 @@ void main() async {
 
   // Init Firebase
   await Firebase.initializeApp(
+    name: "test-lisa-it",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -38,9 +39,7 @@ class MainApp extends StatelessWidget {
       create: (context) => AuthBloc(
         authRepository: context.read(),
         // Check auth status on app start
-      )..add(
-          AuthCheckEvent(),
-        ),
+      )..add(AuthCheckEvent()),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
