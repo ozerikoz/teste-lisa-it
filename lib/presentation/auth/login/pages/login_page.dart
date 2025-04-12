@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teste_lisa_it/presentation/auth/login/bloc/login_bloc.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:teste_lisa_it/presentation/auth/login/bloc/login_bloc.dart";
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -34,6 +34,7 @@ class LoginPage extends StatelessWidget {
                           previous.email != current.email,
                       builder: (context, state) {
                         return TextFormField(
+                          key: const ValueKey("email-field"),
                           initialValue: state.email,
                           decoration: InputDecoration(
                             labelText: "Email",
@@ -55,6 +56,7 @@ class LoginPage extends StatelessWidget {
                           previous.password != current.password,
                       builder: (context, state) {
                         return TextFormField(
+                          key: const ValueKey("password-field"),
                           initialValue: state.password,
                           decoration: InputDecoration(
                             labelText: "Password",
@@ -81,6 +83,7 @@ class LoginPage extends StatelessWidget {
                           child: SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
+                              key: const ValueKey("login-button"),
                               onPressed: state.status == LoginStatus.loading
                                   ? null
                                   : () {

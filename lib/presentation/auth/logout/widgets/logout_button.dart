@@ -26,6 +26,7 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
+      key: const ValueKey("logout-button"),
       onPressed: () {
         context.read<AuthBloc>().add(AuthLogoutEvent());
       },

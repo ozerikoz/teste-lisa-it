@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TesteLisaAppBar(title: "Listagem de posts"),
+      appBar: const TesteLisaAppBar(title: "Listagem de posts"),
       body: BlocConsumer<PostsBloc, PostsState>(
         listener: (context, state) {
           // todo show snackbar if PostStatus.status is failure
@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: PostCard(
+                        key: ValueKey("post-card-$index"),
                         title: post.title,
                         body: post.body,
                         postUserName: post.postUserProfile.name,
