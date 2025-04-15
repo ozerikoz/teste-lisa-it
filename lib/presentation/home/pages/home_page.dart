@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:teste_lisa_it/core/router/routes.dart';
+import 'package:teste_lisa_it/presentation/core/themes/colors.dart';
 import 'package:teste_lisa_it/presentation/core/widgets/app_bar.dart';
 import 'package:teste_lisa_it/presentation/home/bloc/posts_bloc.dart';
+import 'package:teste_lisa_it/presentation/home/widgets/home_error_view_widget.dart';
 import 'package:teste_lisa_it/presentation/home/widgets/post_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,7 +37,10 @@ class _HomePageState extends State<HomePage> {
       final postsBloc = context.read<PostsBloc>();
 
       // Return if the user is already loading more posts to avoid multiple calls
-      if (postsBloc.state.status == PostsStatus.loading) return;
+      if (postsBloc.state.status == PostsStatus.loading ||
+          postsBloc.state.status == PostsStatus.failure) {
+        return;
+      }
 
       // Call [FetchPostsEvent] to load more posts
       // and increment the page number
@@ -47,10 +52,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TesteLisaAppBar(title: "Listagem de posts"),
-      body: BlocConsumer<PostsBloc, PostsState>(
-        listener: (context, state) {
-          // todo show snackbar if PostStatus.status is failure
-        },
+      body: BlocBuilder<PostsBloc, PostsState>(
         builder: (context, state) {
           // Initial loading state
           if (state.status == PostsStatus.loading && state.posts.isEmpty ||
@@ -65,8 +67,14 @@ class _HomePageState extends State<HomePage> {
             // Initial error state
           } else if (state.status == PostsStatus.failure &&
               state.posts.isEmpty) {
-            return Center(
-              child: Text(state.errorMessage ?? "Error"),
+            return HomeErrorViewWidget(
+              errorMessage:
+                  state.errorMessage ?? "Algo deu errado ao carregar os posts!",
+              onRetry: () {
+                context.read<PostsBloc>().add(
+                      FetchPostsEvent(limit: 10, page: 1),
+                    );
+              },
             );
             // Success state
           } else if (state.status == PostsStatus.success ||
@@ -75,6 +83,7 @@ class _HomePageState extends State<HomePage> {
             return ListView.builder(
               controller: _scrollController,
               itemCount: state.posts.length,
+              padding: const EdgeInsets.only(bottom: 48),
               itemBuilder: (context, index) {
                 final post = state.posts[index];
 
@@ -116,6 +125,60 @@ class _HomePageState extends State<HomePage> {
                             height: 24,
                             child: CircularProgressIndicator(),
                           ),
+                        ),
+                      ),
+
+                    // If the user reach the end of the list and fetching posts failed
+                    // show a message
+                    if (index == state.posts.length - 1 &&
+                        state.status == PostsStatus.failure &&
+                        !state.reachedMaxPage)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 24, bottom: 48),
+                        child: Column(
+                          children: [
+                            Text(
+                              state.errorMessage ??
+                                  "Algo deu errado ao carregar mais posts! \n ${state.errorMessage}"
+                                      "Algo deu errado ao carregar mais posts!",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.onError,
+                                  ),
+                            ),
+                            const SizedBox(height: 8),
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                context.read<PostsBloc>().add(
+                                      FetchPostsEvent(page: state.page + 1),
+                                    );
+                              },
+                              icon: Icon(
+                                Icons.refresh,
+                                color: AppColors.white1,
+                              ),
+                              label: Text(
+                                'Tentar Novamente',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
+                                      color: AppColors.white1,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              style: Theme.of(context)
+                                  .elevatedButtonTheme
+                                  .style
+                                  ?.copyWith(
+                                    backgroundColor: WidgetStateProperty.all(
+                                        Theme.of(context).colorScheme.onError),
+                                  ),
+                            ),
+                          ],
                         ),
                       ),
 
