@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:teste_lisa_it/data/repositories/auth/auth_repository.dart';
@@ -17,11 +15,6 @@ import 'package:teste_lisa_it/data/services/db/firestore_service.dart';
 /// List of services and repositories dependencies
 List<SingleChildWidget> get dependencies {
   return [
-    // Firebase auth
-    Provider(create: (_) => FirebaseAuth.instance),
-    // Firebase firestore
-    Provider(create: (_) => FirebaseFirestore.instance),
-    // Firebase auth service
     Provider(
       create: (context) => FirebaseAuthService(
         firebaseAuth: context.read(),
