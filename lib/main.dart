@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,12 @@ void main() async {
   await FirebaseService.initializeFirebase();
 
   // Init Bloc Observer
-  Bloc.observer = AppBlocObserver();
+  // This is used to observe all the Blocs in the app for debugging purposes
+  // uncomment the following line to enable Bloc observer
+
+  // if (kDebugMode) {
+  //   Bloc.observer = AppBlocObserver();
+  // }
 
   runApp(
     MultiProvider(
