@@ -16,7 +16,7 @@ abstract class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
-        hintStyle: TextStyle(color: AppColors.black1),
+        hintStyle: TextStyle(color: AppColors.blackTransparent),
         labelStyle: TextStyle(color: AppColors.black1),
         errorStyle: const TextStyle(color: AppColors.red1),
         border: OutlineInputBorder(
@@ -29,7 +29,7 @@ abstract class AppTheme {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.red1, width: 1.5),
+          borderSide: const BorderSide(color: AppColors.red1, width: 2),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -88,7 +88,7 @@ abstract class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
-        hintStyle: TextStyle(color: AppColors.white1),
+        hintStyle: TextStyle(color: AppColors.whiteTransparent),
         labelStyle: TextStyle(color: AppColors.white1),
         errorStyle: const TextStyle(color: AppColors.red1),
         border: OutlineInputBorder(
@@ -101,7 +101,7 @@ abstract class AppTheme {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.red1, width: 1.5),
+          borderSide: const BorderSide(color: AppColors.red1, width: 2),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
