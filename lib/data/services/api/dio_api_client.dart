@@ -1,14 +1,22 @@
-import 'package:dio/dio.dart';
+import "package:dio/dio.dart";
 import 'package:flutter/foundation.dart';
-import 'package:teste_lisa_it/data/services/api/api_client.dart';
+import "package:teste_lisa_it/data/services/api/api_client.dart";
+import "package:teste_lisa_it/data/exceptions/api_exceptions.dart";
+import "package:teste_lisa_it/core/exceptions/exceptions.dart";
 
+/// A client for making HTTP requests using [Dio].
+///
+/// Provides methods for [get], [post], [put], [delete], and [patch] requests,
+/// with custom exception handling for API errors.
 class DioApiClient extends ApiClient {
+  /// The [Dio] instance used for making HTTP requests.
   late Dio _dio;
 
   DioApiClient({Dio? dio}) {
     _dio = dio ?? _createDio();
   }
 
+  /// Creates a new [Dio] instance with default options.
   Dio _createDio() {
     Dio dio = Dio(BaseOptions(
       responseType: ResponseType.json,
@@ -39,9 +47,10 @@ class DioApiClient extends ApiClient {
       );
 
       return response.data;
-    } catch (e) {
-      // todo add exception handling
-      rethrow;
+    } on DioException catch (e, s) {
+      throw _mapDioException(e, s);
+    } catch (e, s) {
+      throw UnknownException("Unexpected exception: $e", s);
     }
   }
 
@@ -57,9 +66,10 @@ class DioApiClient extends ApiClient {
       );
 
       return response.data;
-    } catch (e) {
-      // todo add exception handling
-      rethrow;
+    } on DioException catch (e, s) {
+      throw _mapDioException(e, s);
+    } catch (e, s) {
+      throw UnknownException("Unexpected exception: $e", s);
     }
   }
 
@@ -75,9 +85,10 @@ class DioApiClient extends ApiClient {
       );
 
       return response.data;
-    } catch (e) {
-      // todo add exception handling
-      rethrow;
+    } on DioException catch (e, s) {
+      throw _mapDioException(e, s);
+    } catch (e, s) {
+      throw UnknownException("Unexpected exception: $e", s);
     }
   }
 
@@ -93,9 +104,10 @@ class DioApiClient extends ApiClient {
       );
 
       return response.data;
-    } catch (e) {
-      // todo add exception handling
-      rethrow;
+    } on DioException catch (e, s) {
+      throw _mapDioException(e, s);
+    } catch (e, s) {
+      throw UnknownException("Unexpected exception: $e", s);
     }
   }
 
@@ -111,9 +123,46 @@ class DioApiClient extends ApiClient {
       );
 
       return response.data;
-    } catch (e) {
-      // todo add exception handling
-      rethrow;
+    } on DioException catch (e, s) {
+      throw _mapDioException(e, s);
+    } catch (e, s) {
+      throw UnknownException("Unexpected exception: $e", s);
+    }
+  }
+
+  /// Maps [DioException] to [AppException] based on the type of error.
+  AppException _mapDioException(DioException e, StackTrace? s) {
+    switch (e.type) {
+      case DioExceptionType.connectionError:
+        return NetworkException();
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return RequestTimeoutException();
+
+      case DioExceptionType.badResponse:
+        final statusCode = e.response?.statusCode;
+        switch (statusCode) {
+          case 400:
+            return BadRequestException();
+          case 401:
+            return UnauthorizedException();
+          case 403:
+            return ForbiddenException();
+          case 404:
+            return NotFoundException();
+          case 500:
+            return ServerErrorException();
+          default:
+            return UnknownException("Unexpected exception: $e", s);
+        }
+
+      case DioExceptionType.cancel:
+        return RequestCancelledException();
+
+      case DioExceptionType.unknown:
+      default:
+        return UnknownException("Unexpected exception: $e", s);
     }
   }
 }
