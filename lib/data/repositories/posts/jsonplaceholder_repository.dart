@@ -1,3 +1,4 @@
+import 'package:teste_lisa_it/core/exceptions/exceptions.dart';
 import 'package:teste_lisa_it/data/repositories/posts/posts_repository.dart';
 import 'package:teste_lisa_it/data/services/api/posts/jsonplaceholder_posts_api_service.dart';
 import 'package:teste_lisa_it/domain/entities/post/post_entity.dart';
@@ -27,9 +28,10 @@ class JsonplaceholderPostsRepository extends PostsRepository {
       });
 
       return posts;
-    } catch (e) {
-      // todo add exception handling
+    } on AppException {
       rethrow;
+    } catch (e, s) {
+      throw UnknownException("Error fetching posts", s);
     }
   }
 }
