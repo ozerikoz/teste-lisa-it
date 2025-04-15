@@ -1,6 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teste_lisa_it/core/blocs/auth/auth_bloc.dart';
+import 'package:teste_lisa_it/core/exceptions/exceptions.dart';
+import 'package:teste_lisa_it/data/exceptions/auth_exceptions.dart';
 import 'package:teste_lisa_it/data/repositories/auth/auth_repository.dart';
 
 part 'login_event.dart';
@@ -16,14 +19,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   })  : _authRepository = authRepository,
         _authBloc = authBloc,
         super(const LoginState()) {
-    on<EmailChangedEvent>((event, emit) {
-      emit(state.copyWith(email: event.email));
-    });
-
-    on<PasswordChangedEvent>((event, emit) {
-      emit(state.copyWith(password: event.password));
-    });
-
     on<LoginRequestedEvent>((event, emit) async {
       emit(state.copyWith(status: LoginStatus.loading));
 
@@ -35,12 +30,32 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
         emit(state.copyWith(status: LoginStatus.success));
         _authBloc.add(AuthCheckEvent());
+      } on InvalidCredentialsException {
+        emit(state.copyWith(
+          status: LoginStatus.failure,
+          errorMessage: "Email ou senha inválidos. Tente novamente!",
+        ));
+      } on NetworkException {
+        emit(state.copyWith(
+          status: LoginStatus.failure,
+          errorMessage:
+              "Erro de conexão. Verifique sua internet e tente novamente!",
+        ));
       } catch (e) {
         emit(state.copyWith(
-          status: LoginStatus.error,
-          errorMessage: e.toString(),
+          status: LoginStatus.failure,
+          errorMessage:
+              "Erro inesperado. Por favor, tente novamente mais tarde!",
         ));
       }
+    });
+
+    on<LoginPasswordVisibilityChangedEvent>((event, emit) {
+      emit(state.copyWith(isPasswordObscure: !state.isPasswordObscure));
+    });
+
+    on<LoginAutovalidateModeChangedEvent>((event, emit) {
+      emit(state.copyWith(autovalidateMode: event.autovalidateMode));
     });
   }
 }

@@ -35,3 +35,21 @@ class LoginRequestedEvent extends LoginEvent {
   @override
   List<Object?> get props => [email, password];
 }
+
+class LoginPasswordVisibilityChangedEvent extends LoginEvent {
+  final bool isPasswordObscure;
+
+  LoginPasswordVisibilityChangedEvent({required this.isPasswordObscure});
+
+  @override
+  List<Object?> get props => [isPasswordObscure];
+}
+
+class LoginAutovalidateModeChangedEvent extends LoginEvent {
+  final AutovalidateMode autovalidateMode;
+
+  LoginAutovalidateModeChangedEvent({required this.autovalidateMode});
+
+  @override
+  List<Object?> get props => [autovalidateMode];
+}
