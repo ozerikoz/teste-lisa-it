@@ -1,11 +1,10 @@
-import "package:firebase_auth/firebase_auth.dart";
-import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:integration_test/integration_test.dart";
 import "package:provider/provider.dart";
-import "package:teste_lisa_it/config/firebase_options.dart";
 import "package:teste_lisa_it/core/dependencies.dart";
+import "package:teste_lisa_it/data/services/auth/firebase_auth_service.dart";
+import "package:teste_lisa_it/data/services/firebase_service.dart";
 import "package:teste_lisa_it/main.dart";
 import "package:teste_lisa_it/presentation/auth/login/pages/login_page.dart";
 import "package:teste_lisa_it/presentation/home/pages/home_page.dart";
@@ -18,15 +17,11 @@ void main() {
 
   setUpAll(() async {
     // Initialize Firebase before running tests
-    await Firebase.initializeApp(
-      name: "test-lisa-it",
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    await FirebaseService.initializeFirebase();
   });
 
   tearDown(() async {
-    // Delete the Firebase app instance after each test
-    await FirebaseAuth.instance.signOut();
+    await FirebaseAuthService().logout();
   });
 
   group("end-to-end test", () {
