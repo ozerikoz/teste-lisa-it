@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:teste_lisa_it/presentation/core/themes/colors.dart';
 
-/// A home error widget that displays an error message and a retry button.
-class HomeErrorWidget extends StatelessWidget {
+/// A home error view widget that displays an error message and a retry button.
+class HomeErrorViewWidget extends StatelessWidget {
   /// The error message to display.
   final String errorMessage;
 
   /// The callback function to execute when the retry button is pressed.
   final Function() onRetry;
 
-  const HomeErrorWidget({
+  const HomeErrorViewWidget({
     super.key,
     required this.errorMessage,
     required this.onRetry,
