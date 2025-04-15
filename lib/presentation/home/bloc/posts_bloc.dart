@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teste_lisa_it/core/exceptions/exceptions.dart';
 import 'package:teste_lisa_it/data/repositories/post_users/post_users_repository.dart';
 import 'package:teste_lisa_it/data/repositories/posts/posts_repository.dart';
 import 'package:teste_lisa_it/presentation/home/models/post_ui_model.dart';
@@ -87,10 +88,16 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
         posts: posts,
         page: event.page,
       ));
+    } on NetworkException {
+      emit(state.copyWith(
+        status: PostsStatus.failure,
+        errorMessage:
+            "Erro de conexão. Verifique sua internet e tente novamente!",
+      ));
     } catch (e) {
       emit(state.copyWith(
         status: PostsStatus.failure,
-        errorMessage: e.toString(),
+        errorMessage: "Algo deu errado. Por favor, tente novamente mais tarde!",
       ));
     }
   }
