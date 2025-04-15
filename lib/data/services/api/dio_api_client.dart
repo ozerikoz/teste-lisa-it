@@ -23,14 +23,16 @@ class DioApiClient extends ApiClient {
       contentType: "application/json",
     ));
 
-    if (kDebugMode) {
-      dio.interceptors.add(
-        LogInterceptor(
-          requestBody: true,
-          responseBody: true,
-        ),
-      );
-    }
+    // Log interceptor for debugging purposes
+    // uncomment the following line to enable logging
+    // if (kDebugMode) {
+    //   dio.interceptors.add(
+    //     LogInterceptor(
+    //       requestBody: true,
+    //       responseBody: true,
+    //     ),
+    //   );
+    // }
 
     return dio;
   }
