@@ -1,3 +1,4 @@
+import 'package:teste_lisa_it/core/exceptions/exceptions.dart';
 import 'package:teste_lisa_it/data/repositories/post_users/post_users_repository.dart';
 import 'package:teste_lisa_it/data/services/db/firestore_service.dart';
 import 'package:teste_lisa_it/domain/entities/post_user/post_user_entity.dart';
@@ -27,8 +28,10 @@ class FirestorePostUsersRepository extends PostUsersRepository {
       final userData = user.docs.first.data() as Map<String, dynamic>;
 
       return PostUser.fromJson(userData);
-    } catch (e) {
+    } on AppException {
       rethrow;
+    } catch (e, s) {
+      throw UnknownException("Error getting user by ID", s);
     }
   }
 }
