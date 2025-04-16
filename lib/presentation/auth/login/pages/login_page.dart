@@ -65,35 +65,39 @@ class _LoginPageState extends State<LoginPage> {
                           validator: CredentialsValidator.validateEmail,
                         ),
                         const SizedBox(height: 16),
-                        TextFormField(
-                          key: const ValueKey("password-field"),
-                          decoration: InputDecoration(
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            hintText: "Digite sua senha",
-                            labelText: "Senha",
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                context.read<LoginBloc>().add(
-                                      LoginPasswordVisibilityChangedEvent(
-                                        isPasswordObscure:
-                                            state.isPasswordObscure,
-                                      ),
-                                    );
-                              },
-                              icon: Icon(
-                                state.isPasswordObscure
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 24,
+                     BlocBuilder<LoginBloc, LoginState>(
+                          builder: (context,state) {
+                            return TextFormField(
+                              key: const ValueKey("password-field"),
+                              decoration: InputDecoration(
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                hintText: "Digite sua senha",
+                                labelText: "Senha",
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    context.read<LoginBloc>().add(
+                                          LoginPasswordVisibilityChangedEvent(
+                                            isPasswordObscure:
+                                                state.isPasswordObscure,
+                                          ),
+                                        );
+                                  },
+                                  icon: Icon(
+                                    state.isPasswordObscure
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Theme.of(context).colorScheme.primary,
+                                    size: 24,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          obscureText: state.isPasswordObscure,
-                          onChanged: (value) {
-                            _passwordController.text = value;
-                          },
-                          validator: CredentialsValidator.validatePassword,
+                              obscureText: state.isPasswordObscure,
+                              onChanged: (value) {
+                                _passwordController.text = value;
+                              },
+                              validator: CredentialsValidator.validatePassword,
+                            );
+                          }
                         ),
                         const SizedBox(height: 24),
                         BlocConsumer<LoginBloc, LoginState>(
