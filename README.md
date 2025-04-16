@@ -23,12 +23,16 @@ O aplicativo permite que usuários se autentiquem utilizando Firebase Authentica
 
 ## 📱 Telas
 
-![Tela de Login](docs/images/login.png)
-![Feed de Posts](docs/images/feed.png)
-![Detalhe do Post](docs/images/post.png)
-![Perfil do Dono do Post](docs/images/profile.png)
+### 🔒 Login | 📰 Feed de Posts | 📝 Detalhe do Post | 👤 Perfil do Usuário
 
-As imagens foram redimensionadas para um tamanho adequado para visualização no documento.
+<div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start;">
+
+  <img src="docs/images/login.png" alt="Login" width="200"/>
+  <img src="docs/images/feed.png" alt="Feed de Posts" width="200"/>
+  <img src="docs/images/post.png" alt="Detalhe do Post" width="200"/>
+  <img src="docs/images/profile.png" alt="Perfil do Usuário do Post" width="200"/>
+
+</div>
 
 ## 🔒 Credenciais para teste
 
