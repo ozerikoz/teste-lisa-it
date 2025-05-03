@@ -64,7 +64,9 @@ Use as seguintes credenciais para testar o aplicativo:
    flutter pub get
    ```
 
-3. **Execute o aplicativo**
+3. **Abra um emulador ou conecte seu dispositivo móvel**
+
+4. **Execute o aplicativo**
    ```bash
    flutter run
    ```
