@@ -54,8 +54,8 @@ Use as seguintes credenciais para testar o aplicativo:
 1. **Clone o repositório e acesse a pasta do projeto**
 
    ```bash
-   git clone https://github.com/seu-usuario/teste_lisa_it.git
-   cd teste_lisa_it
+   git clone https://github.com/ozerikoz/teste-lisa-it.git
+   cd teste-lisa-it
    ```
 
 2. **Instale as dependências**
